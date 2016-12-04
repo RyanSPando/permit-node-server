@@ -2,10 +2,9 @@ const requestify = require('requestify');
 const knex = require('../db/connection');
 var geocoder = require('node-geocoder')({provider: 'google'});
 
-
 function getPermitData(record) {
 
-  const url = `http://www.civicdata.com/api/action/datastore_search_sql?sql=SELECT * from "d914e871-21df-4800-a473-97a2ccdf9690" WHERE _id > ${record} ORDER BY _id LIMIT 5`;
+  const url = `http://www.civicdata.com/api/action/datastore_search_sql?sql=SELECT * from "d914e871-21df-4800-a473-97a2ccdf9690" WHERE _id > ${record} ORDER BY _id`;
   return requestify.get(url);
 }
 
