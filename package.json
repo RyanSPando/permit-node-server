@@ -17,8 +17,10 @@
     "http": "0.0.0",
     "knex": "^0.11.10",
     "morgan": "~1.7.0",
+    "node-geocoder": "^3.15.1",
     "nunjucks": "^2.4.2",
     "pg": "6.1.0",
+    "request": "^2.79.0",
     "requestify": "^0.2.5"
   },
   "devDependencies": {
