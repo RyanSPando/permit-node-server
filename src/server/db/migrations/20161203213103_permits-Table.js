@@ -6,9 +6,9 @@ exports.up = function(knex, Promise) {
     table.text('OriginalZip');
     table.text('AppliedDate');
     table.text('EstProjectCost');
+    table.text('Fee');
     table.text('LAT');
     table.text('LON');
-    table.text('Fee');
   });
 };
 

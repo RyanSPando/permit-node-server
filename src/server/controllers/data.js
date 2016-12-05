@@ -3,8 +3,7 @@ const knex = require('../db/connection');
 var geocoder = require('node-geocoder')({provider: 'google'});
 
 function getPermitData(record) {
-
-  const url = `http://www.civicdata.com/api/action/datastore_search_sql?sql=SELECT * from "d914e871-21df-4800-a473-97a2ccdf9690" WHERE _id > ${record} ORDER BY _id`;
+  const url = `http://www.civicdata.com/api/action/datastore_search_sql?sql=SELECT * from "d914e871-21df-4800-a473-97a2ccdf9690" WHERE _id > ${record} ORDER BY _id LIMIT 20`;
   return requestify.get(url);
 }
 
@@ -52,6 +51,59 @@ function geoCode(data) {
   });
 }
 
+function geoCodePSQL() {
+  for (let x of take(1000, geoGen())) {
+  console.log(x);
+}
+  // for (let i = x; i <= 20 + x; i++) {
+  //   knex('permits').where({_id: i}).then(row => {
+  //     if (row[0].OriginalCity === '' && row[0].LAT !== '') {
+  //       geocoder.reverse({lat: row[0].LAT, lon: row[0].LON}, function(err, data) {
+  //         knex('permits')
+  //         .update({
+  //           OriginalZip: data[0].zipcode,
+  //           OriginalCity: data[0].city
+  //         })
+  //         .where({_id: i})
+  //         .then(value => {
+  //           console.log(value);
+  //         });
+  //       });
+  //     }
+  //   });
+  // }
+}
+
+function* geoGen() {
+  var i = 1;
+  while(true) {
+    try {
+      let row = yield knex('permits').where({_id: i});
+      console.log(row);
+      // if (row[0].OriginalCity === '' && row[0].LAT !== '') {
+      //   let geoCoded = yield geocoder.reverse({lat: row[0].LAT, lon: row[0].LON});
+      //   yield knex('permits')
+      //   .update({
+      //     OriginalZip: geoCoded[0].zipcode,
+      //     OriginalCity: geoCoded[0].city
+      //   })
+      //   .where({_id: i}, i++);
+      // }
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+}
+
+function* take(n, iterable) {
+  for (let x of iterable) {
+    if (n <= 0) return;
+    n--;
+    yield x;
+  }
+}
+
 function getLastRecord() {
   return knex('permits').max('_id');
 }
@@ -61,5 +113,6 @@ module.exports = {
   filterJson,
   insertPermitData,
   geoCode,
+  geoCodePSQL,
   getLastRecord
 };
