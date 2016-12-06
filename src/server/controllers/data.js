@@ -108,11 +108,23 @@ function getLastRecord() {
   return knex('permits').max('_id');
 }
 
+function getPermits(searchParams) {
+  return knex('permits').where(searchParams);
+}
+
+function getMonth(searchParam) {
+  const key = Object.keys(searchParam)[0];
+  const search = searchParam.AppliedDate.slice(0,7) + '%';
+  return knex('permits').where(key, 'like', search);
+}
+
 module.exports = {
   getPermitData,
   filterJson,
   insertPermitData,
   geoCode,
   geoCodePSQL,
-  getLastRecord
+  getLastRecord,
+  getPermits,
+  getMonth
 };
