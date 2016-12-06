@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const dataController = require('../controllers/data.js');
-const data = require('./data.json');
 
 router.get('/updatePermitData', function (req, res, next) {
   dataController.getLastRecord()
