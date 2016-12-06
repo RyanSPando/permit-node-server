@@ -28,10 +28,5 @@ router.get('/getPermits', function(req, res, next) {
     res.json(data);
   });
 });
-router.get('/getMonth', function(req, res, next) {
-  dataController.getMonth(req.query).then(data => {
-    res.json(data);
-  });
-});
 
 module.exports = router;
