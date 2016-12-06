@@ -109,13 +109,24 @@ function getLastRecord() {
 }
 
 function getPermits(searchParams) {
-  return knex('permits').where(searchParams);
-}
 
-function getMonth(searchParam) {
-  const key = Object.keys(searchParam)[0];
-  const search = searchParam.AppliedDate.slice(0,7) + '%';
-  return knex('permits').where(key, 'like', search);
+  if (searchParams.AppliedDate && searchParams.OriginalCity) {
+    const key = 'AppliedDate';
+    const search = searchParams.AppliedDate.slice(0,7) + '%' || '';
+    return knex('permits')
+    .where({OriginalCity: searchParams.OriginalCity})
+    .where(key, 'like', search);
+  }
+  else if (searchParams.AppliedDate ) {
+    const key = 'AppliedDate';
+    const search = searchParams.AppliedDate.slice(0,7) + '%' || '';
+    return knex('permits')
+    .where(key, 'like', search);
+  }
+  else if (searchParams.OriginalCity) {
+    return knex('permits')
+    .where({OriginalCity: searchParams.OriginalCity});
+  }
 }
 
 module.exports = {
@@ -125,6 +136,5 @@ module.exports = {
   geoCode,
   geoCodePSQL,
   getLastRecord,
-  getPermits,
-  getMonth
+  getPermits
 };
