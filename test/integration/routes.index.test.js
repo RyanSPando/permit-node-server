@@ -42,6 +42,7 @@ describe('routes : index', () => {
         res.type.should.equal('application/json');
         res.body.message.should.eql('Not Found');
         done();
+        
       });
     });
   });
