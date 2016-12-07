@@ -35,4 +35,10 @@ router.get('/radius', function(req, res, next) {
   });
 });
 
+router.get('/zillow', function(req, res, next) {
+  dataController.zillow(req.query).then(data => {
+    res.json(data);
+  });
+});
+
 module.exports = router;

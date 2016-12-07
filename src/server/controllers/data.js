@@ -132,6 +132,9 @@ function getPermits(searchParams) {
 function radius(searchParam) {
   return knex.raw(`SELECT *, point(${searchParam.lon}, ${searchParam.lat}) <@> point(lon, lat)::point AS distance FROM permits WHERE (point(${searchParam.lon}, ${searchParam.lat}) <@> point(lon, lat)) < 3 AND "AppliedDate" LIKE '2016%';`);
 }
+function zillow(searchParam) {
+  return requestify.get(`http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=X1-ZWz19gkyp98qh7_517ck&address=${searchParam}`);
+}
 
 module.exports = {
   getPermitData,
@@ -141,5 +144,6 @@ module.exports = {
   geoCodePSQL,
   getLastRecord,
   getPermits,
-  radius
+  radius,
+  zillow
 };
