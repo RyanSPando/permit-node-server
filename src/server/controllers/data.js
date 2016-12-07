@@ -130,7 +130,7 @@ function getPermits(searchParams) {
 }
 
 function radius(searchParam) {
-  return knex.raw(`SELECT *, point(${searchParam.lon}, ${searchParam.lat}) <@> point(lon, lat)::point AS distance FROM permits WHERE (point(${searchParam.lon}, ${searchParam.lat}) <@> point(lon, lat)) < 5 AND "AppliedDate" LIKE '2016%';`);
+  return knex.raw(`SELECT *, point(${searchParam.lon}, ${searchParam.lat}) <@> point(lon, lat)::point AS distance FROM permits WHERE (point(${searchParam.lon}, ${searchParam.lat}) <@> point(lon, lat)) < 3 AND "AppliedDate" LIKE '2016%';`);
 }
 
 module.exports = {
