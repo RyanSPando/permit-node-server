@@ -29,4 +29,10 @@ router.get('/getPermits', function(req, res, next) {
   });
 });
 
+router.get('/radius', function(req, res, next) {
+  dataController.radius(req.query).then(data => {
+    res.json(data);
+  });
+});
+
 module.exports = router;

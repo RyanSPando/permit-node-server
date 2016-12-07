@@ -5,10 +5,10 @@ exports.up = function(knex, Promise) {
     table.text('OriginalCity');
     table.text('OriginalZip');
     table.text('AppliedDate');
-    table.text('EstProjectCost');
-    table.text('Fee');
-    table.text('LAT');
-    table.text('LON');
+    table.decimal('EstProjectCost', 14, 2);
+    table.decimal('Fee', 14 , 2);
+    table.float('LAT');
+    table.float('LON');
   });
 };
 
